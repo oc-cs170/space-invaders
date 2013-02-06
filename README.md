@@ -14,4 +14,8 @@ The program should consist of three modules:
 To-do
 -----
 
-1. 
+1. Create a Space Invaders clone.
+2. Include scoring, multi-image alien invaders, bunkers, and a player ship.
+3. Add random "High Alien" encounters.
+4. Implement multiple game levels, and a limited number of player lives.
+
