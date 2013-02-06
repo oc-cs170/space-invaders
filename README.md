@@ -16,6 +16,5 @@ To-do
 
 1. Create a Space Invaders clone.
 2. Include scoring, multi-image alien invaders, bunkers, and a player ship.
-3. Add random "High Alien" encounters.
-4. Implement multiple game levels, and a limited number of player lives.
-
+3. Implement multiple game levels, and a limited number of player lives.
+4. Add random "High Alien" encounters.
