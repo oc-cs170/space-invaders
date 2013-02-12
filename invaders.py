@@ -24,15 +24,30 @@ class Invaders(pygame.sprite.Sprite):
         
 
         # Draw and load Invader's
-        self.image = pygame.Surface(self.rect.size)
-        invader_ship = pygame.image.load('/tyrian.shp.010008.png')
+        ships = pygame.image.load(["/tyrian.shp.010008.png"]) # "Other Image", "Other Image", "Other Image", "Final Image")
+            for i in range (7):
+                build_ships.append(ships)
+
+        invader_ship_col1 = pygame.image.load('/tyrian.shp.010008.png')
+        invader_ship_col2 = pygame.image.load('/tyrian.shp.010008.png') #need the rest of the images
+        invader_ship_col3 = pygame.image.load('/tyrian.shp.010008.png') #need the rest of the images
+        invader_ship_col4 = pygame.image.load('/tyrian.shp.010008.png') #need the rest of the images
+        invader_ship_col5 = pygame.image.load('/tyrian.shp.010008.png') #need the rest of the images
+        
+
         pygame.sprite.Sprite.__init__(self)
 
 
         
         # Initial location and velocity
         self.rect = pygame.Rect(0, 0, col1)
-        pygame.sprite.Group()
+        invader_ships = pygame.sprite.Group(invader_ships)
+        for i in range(7):
+            pygame.sprite.add(invader_ship_col1)
+            pygame.sprite.add(invader_ship_col2)
+            pygame.sprite.add(invader_ship_col3)
+            pygame.sprite.add(invader_ship_col4)
+            pygame.sprite.add(invader_ship_col5)
 
         
 
@@ -42,7 +57,7 @@ class Invaders(pygame.sprite.Sprite):
         Object moves through space at a constant velocity, wrapping when its
         leading-edge leaves the screen.
         """
-        self.rect.move_ip(self.vx, self.vy)
+        pygame.sprite.Group(invader_ships).rect.move_ip(self.vx, self.vy)
 
         # Vertical "leading-edge" screen wrapping
         if self.rect.bottom > self.screen_height:
