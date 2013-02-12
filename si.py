@@ -13,7 +13,6 @@ WINDOW_HEIGHT = 738
 
 class Space_Invaders(object):
     """Create a game of Space Invaders."""
-
     def __init__(self):
         pygame.init()
         pygame.display.set_caption(WINDOW_TITLE)
@@ -27,6 +26,8 @@ class Space_Invaders(object):
         
         # Use a clock to control frame rate
         self.clock = pygame.time.Clock()
+
+        self.ship = Ship(self.screen)
 
     def create_background(self, width, height):
         """A black background, filled with stars... The Final Frontier.
@@ -76,8 +77,9 @@ class Space_Invaders(object):
             self.screen.blit(self.background, (0, 0))  
 
             # Ship image is drawn to screen.
-            # self.screen.blit(self.ship.image, self.ship.rect)
-            self.screen.draw(self.ship) 
+            # self.screen.blit(Ship.image, (100, 100))
+            self.ship_sprite.draw(self.screen)
+            
             pygame.display.flip()
 
 
