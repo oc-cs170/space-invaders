@@ -7,13 +7,12 @@ import random
 from ship import Ship
 
 WINDOW_TITLE = 'Space Invaders'
-WINDOW_WIDTH = 1024
-WINDOW_HEIGHT = 738
+WINDOW_WIDTH = 800
+WINDOW_HEIGHT = 638
 
 
 class Space_Invaders(object):
     """Create a game of Space Invaders."""
-
     def __init__(self):
         pygame.init()
         pygame.display.set_caption(WINDOW_TITLE)
@@ -24,9 +23,8 @@ class Space_Invaders(object):
         self.screen.fill(pygame.Color('Black'))
         pygame.display.flip()
         self.background = self.create_background(WINDOW_WIDTH, WINDOW_HEIGHT)
-        
-        # Use a clock to control frame rate
-        self.clock = pygame.time.Clock()
+
+        self.ship = Ship(self.screen)
 
     def create_background(self, width, height):
         """A black background, filled with stars... The Final Frontier.
@@ -61,7 +59,6 @@ class Space_Invaders(object):
 
         running = True
         while running:
-            self.clock.tick(30)  # Max frames per second
 
             # Event handling
             for event in pygame.event.get():
@@ -71,17 +68,25 @@ class Space_Invaders(object):
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_ESCAPE:
                         running = False
+                    elif event.key == pygame.K_LEFT:
+                        self.ship.move = -4
+                    elif event.key == pygame.K_RIGHT:
+                        self.ship.move = 4
+
+                elif event.type == pygame.KEYUP:
+                    if event.key == pygame.K_RIGHT or event.key == pygame.K_LEFT:
+                        self.ship.move = 0
             
             # Draw the scene
             self.screen.blit(self.background, (0, 0))  
 
             # Ship image is drawn to screen.
-            # self.screen.blit(self.ship.image, self.ship.rect)
-            self.screen.draw(self.ship) 
+            self.ship.update()
+            self.screen.blit(self.ship.image, self.ship.rect)
+
             pygame.display.flip()
 
 
 if __name__ == '__main__':
     game = Space_Invaders()
     game.play()
-
