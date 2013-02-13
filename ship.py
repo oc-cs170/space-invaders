@@ -46,37 +46,4 @@ class Bullet(pygame.sprite.Sprite):
 
     def __init__(self, location, ship):
         pygame.sprite.Sprite.__init__(self)
-        if ship == 
-
-
-
-
-
-
-
-
-
-
-class Bullet(pygame.sprite.Sprite):
     
-    bullet = pygame.Surface((4,4))
-    bullet.set_colorkey(pygame.Color('black'))
-    pygame.draw.circle(bullet, pygame.Color('white'), (2, 2), 2)
-    
-    def __init__(self, location, ship):
-        pygame.sprite.Sprite.__init__(self)
-        if ship == 'invader':
-            self.yv = 5
-        elif ship == 'hero':
-            self.yv = -5
-
-        self.image = self.bullet
-        self.rect = pygame.Rect((0,0), self.image.get_size())
-        self.rect.midbottom = location
-
-
-
-
-    def update(self):
-        self.rect.centery += self.yv
-

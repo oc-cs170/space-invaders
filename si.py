@@ -72,7 +72,9 @@ class Space_Invaders(object):
                         self.ship.move = -4
                     elif event.key == pygame.K_RIGHT:
                         self.ship.move = 4
-                    
+                    elif event.key == pygame.K_SPACE:
+                        self.hero_bullets.add(Bullet(self.ship.rect.midtop, 'hero'))
+
 
                 elif event.type == pygame.KEYUP:
                     if event.key == pygame.K_RIGHT or event.key == pygame.K_LEFT:
