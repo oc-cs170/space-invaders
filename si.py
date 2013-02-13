@@ -150,7 +150,7 @@ class Space_Invaders(object):
             self.bunkers.draw(self.screen)
 
             # Updates invaders at calculated intervals
-            if (pygame.time.get_ticks() - self.now) > len(self.invader_sprites.sprites())*20:
+            if (pygame.time.get_ticks() - self.now) > max(len(self.invader_sprites.sprites())*20, 100):
                 self.invader_sprites.update()
                 self.inv_bullets.add(Bullet(random.choice(self.invader_sprites.sprites()).rect.midbottom, 'invader'))
                 # if an edge is near then change the direction all the invaders move
