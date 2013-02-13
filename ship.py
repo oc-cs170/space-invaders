@@ -14,6 +14,13 @@ class Ship(pygame.sprite.Sprite):
         # Load ship image
         self.sheet = pygame.image.load("tyrian.shp.010008.png").convert()
         ship = self.sheet.subsurface(pygame.Rect((96, 33), (25, 16)))
+        col1 = (25*3, 48*3)
+        col2 = (25*3, 48*4)
+        col3 = (25*3, 48*5)
+        col4 = (25*3, 48*6)
+        for i in range(7):
+            
+
         ship = pygame.transform.scale(ship, (62, 40))     
 
         self.image = ship
