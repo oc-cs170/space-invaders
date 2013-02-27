@@ -49,6 +49,13 @@ class Invader(pygame.sprite.Sprite):
         if self.rect.right > self.screen_width*.95 or self.rect.left < self.screen_width*.05:
             Invader.edge = True
 
+class Alien(pygame.sprite.Sprite):
+    sheet = pygame.image.load("tyrian.shp.007D3C.png")
+    alien = sheet.subsurface(pygame.Rect((23, 137), (75, 87)))
+    invader = alien.subsurface(pygame.Rect((25, 29), (25, 29)))
+    invader.set_colorkey(pygame.Color(191, 220, 191))
+    invader = pygame.transform.rotate(invader, 180)
+    pass
 
 
 

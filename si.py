@@ -106,7 +106,7 @@ class Space_Invaders(object):
                 # hits an enemy
                 collision = pygame.sprite.spritecollide(bullet, self.invader_sprites, True,
                                                         pygame.sprite.collide_mask)
-                if collision:
+                if collision:   
                     self.score += self.points[collision[0].bird]
                     self.hero_bullets.remove(bullet)
                     if not self.invader_sprites.sprites():
