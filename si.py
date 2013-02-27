@@ -1,6 +1,7 @@
 import pygame
 from invaders import Invader
 from invaders import Bullet
+from invaders import Alien
 from ship import Ship
 from ship import Bunker
 
@@ -30,6 +31,8 @@ class Space_Invaders(object):
         # Make ship and Sprite Groups
         self.ship = Ship(self.screen)
         self.ship_sprite = pygame.sprite.Group(self.ship)
+        self.alien_sprite = pygame.sprite.GroupSingle()
+        self.alien_bullet = pygame.sprite.GroupSingle()
         self.invader_sprites = pygame.sprite.Group()
         self.hero_bullets = pygame.sprite.Group()
         self.inv_bullets = pygame.sprite.Group()
@@ -40,24 +43,24 @@ class Space_Invaders(object):
         for i in range(10):
                 badguy = Invader(self.screen, 0)
                 self.invader_sprites.add(badguy)
-                badguy.rect.topleft = ((WINDOW_WIDTH/4)+i*30, (WINDOW_HEIGHT/8))
+                badguy.rect.topleft = ((self.screen.get_width()/4)+i*30, (self.screen.get_height()/8))
 
         for i in range(1,3):
             for j in range(10):
                 badguy = Invader(self.screen, 1)
                 self.invader_sprites.add(badguy)
-                badguy.rect.topleft = ((WINDOW_WIDTH/4)+j*30, (WINDOW_HEIGHT/8)+i*40)
+                badguy.rect.topleft = ((self.screen.get_width()/4)+j*30, (self.screen.get_height()/8)+i*40)
 
         for i in range(3,5):
             for j in range(10):
                 badguy = Invader(self.screen, 2)
                 self.invader_sprites.add(badguy)
-                badguy.rect.topleft = ((WINDOW_WIDTH/4)+j*30, (WINDOW_HEIGHT/8)+i*40)
+                badguy.rect.topleft = ((self.screen.get_width()/4)+j*30, (self.screen.get_height()/8)+i*40)
 
 
         # Make Bunkers
         for i in range(100, 551, 50):
-            self.bunkers.add(Bunker((i, WINDOW_HEIGHT*.8)))
+            self.bunkers.add(Bunker((i, self.screen.get_height()*.8)))
 
         self.score = 0
         self.points = [100, 50, 20]
@@ -70,7 +73,7 @@ class Space_Invaders(object):
 
     def game_over(self):
         end = self.font.render("GAME OVER", 2, (255,255,0))
-        self.screen.blit(end, (WINDOW_WIDTH/2, WINDOW_HEIGHT/2))
+        self.screen.blit(end, (self.screen.get_width()/2, self.screen.get_width()/2))
         pygame.display.flip()
         pygame.time.wait(3000)
         self.new_game()
@@ -136,6 +139,24 @@ class Space_Invaders(object):
                     bunker_hit[0].update(bullet)
                     self.inv_bullets.remove(bullet)
 
+            if self.alien_bullet.sprite:
+                bunker_hit = pygame.sprite.spritecollide(self.alien_bullet.sprite,
+                                                         self.bunkers, False,
+                                                         pygame.sprite.collide_mask)
+                if bunker_hit:
+                    bunker_hit[0].update(self.alien_bullet.sprite)
+
+                collision = pygame.sprite.spritecollide(self.alien_bullet.sprite, 
+                                                        self.ship_sprite, False,
+                                                        pygame.sprite.collide_mask)
+                if collision:
+                    self.lives -= 1
+                    if not self.lives:
+                        self.ship_sprite.empty()
+                        self.game_over()
+                    self.alien_bullet = None
+
+
 
 
             self.ship_sprite.update()
@@ -149,6 +170,18 @@ class Space_Invaders(object):
 
             self.bunkers.draw(self.screen)
 
+            self.alien_sprite.update()
+            self.alien_sprite.draw(self.screen)
+
+            self.alien_bullet.update()
+            self.alien_bullet.draw(self.screen)
+
+            if self.alien_sprite.sprite:
+                if self.alien_sprite.sprite.rect.left > self.alien_sprite.sprite.alien_fire:
+                    Bullet(self.alien_sprite.sprite.rect.midbottom, 'invader')
+                    self.alien_bullet.add(Bullet(self.alien_sprite.sprite.rect.midbottom, 'invader'))
+                    self.alien_sprite.sprite.alien_fire = self.screen.get_width()
+
             # Updates invaders at calculated intervals
             if (pygame.time.get_ticks() - self.now) > max(len(self.invader_sprites.sprites())*20, 100):
                 self.invader_sprites.update()
@@ -158,6 +191,13 @@ class Space_Invaders(object):
                     Invader.direction = not Invader.direction
                     Invader.edge = not Invader.edge
                     self.invader_sprites.update(30)
+
+
+                if not random.randint(0, 20) and not self.alien_sprite.sprite:
+                    self.alien_sprite.add(Alien(self.screen))
+                    self.alien_sprite.sprite.alien_fire = random.randint(self.screen.get_width() * .05,
+                                                                         self.screen.get_width() * .95)
+
                 self.now = pygame.time.get_ticks()
             self.invader_sprites.draw(self.screen)
 

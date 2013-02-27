@@ -78,10 +78,19 @@ class Bullet(pygame.sprite.Sprite):
 
 
 
+class Alien(pygame.sprite.Sprite):
 
+    def __init__(self, screen):
+        pygame.sprite.Sprite.__init__(self)
+        self.screen = screen
+        self.sheet = pygame.image.load("tyrian.shp.007D3C.png")
+        self.image = self.sheet.subsurface(pygame.Rect((190, 195), (15, 15)))
+        self.image.set_colorkey(pygame.Color(191, 220, 191))
+        self.image = pygame.transform.rotate(self.image, -90)
+        
+        self.rect = pygame.Rect((0, 0), self.image.get_size())
 
-
-
-
-
-
+        self.alien_fire = 0
+ 
+    def update(self):
+        self.rect.left += 3    

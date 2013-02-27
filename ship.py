@@ -43,3 +43,4 @@ class Bunker(pygame.sprite.Sprite):
     def update(self, bullet):
         hole = (bullet.rect.centerx - self.rect.left, bullet.rect.top - self.rect.top)
         pygame.draw.circle(self.image, pygame.Color('black'), hole, 4)
+        
